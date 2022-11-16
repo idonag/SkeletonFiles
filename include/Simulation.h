@@ -17,9 +17,11 @@ public:
     bool shouldTerminate() const;
 
     const Graph &getGraph() const;
+    Graph &getGraph();
     const vector<Agent> &getAgents() const;
     const Party &getParty(int partyId) const;
     const vector<vector<int>> getPartiesByCoalitions() const;
+
 
 private:
     Graph mGraph;

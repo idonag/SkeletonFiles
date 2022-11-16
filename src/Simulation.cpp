@@ -24,8 +24,11 @@ bool Simulation::shouldTerminate() const
 const Graph &Simulation::getGraph() const
 {
     return mGraph;
+} 
+Graph &Simulation::getGraph() 
+{
+    return mGraph;
 }
-
 const vector<Agent> &Simulation::getAgents() const
 {
     return mAgents;
