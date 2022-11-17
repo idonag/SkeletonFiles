@@ -13,9 +13,12 @@ public:
     int getPartyId() const;
     int getId() const;
     void step(Simulation &);
+    ~Agent();
+    Agent* operator= (const Agent& other);
 
 private:
     int mAgentId;
     int mPartyId;
     SelectionPolicy *mSelectionPolicy;
+    
 };

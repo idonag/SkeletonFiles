@@ -13,3 +13,7 @@ const int EdgeWeightSelectionPolicy:: select(Simulation &sim,vector<int> *partie
     }
     return selectedPartyId;
 }
+EdgeWeightSelectionPolicy* EdgeWeightSelectionPolicy::clone()
+{
+            return new EdgeWeightSelectionPolicy(*this);
+} 
