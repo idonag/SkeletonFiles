@@ -41,7 +41,7 @@ void Agent::step(Simulation &sim)
         if(sim.getGraph().getEdgeWeight(this->getPartyId(),i)>0){
             if (sim.getGraph().getParty(i).getState() != State::Joined){
                 //if(sim.getGraph().getParty(i) ) check if a agent from my coalitoin already offerd
-                    vec_to_return->push_back(i);
+                vec_to_return->push_back(i);
             }
         }
     }
