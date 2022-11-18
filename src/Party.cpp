@@ -9,10 +9,10 @@ Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName
 }
 Party::Party(Party &other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){ // copy constructor
     agentOffers = new vector<Agent>();
-    for(Agent& a: other.agentOffers){//copy the pointers to the agents to the new vector
-            agentOffers->push_back(a);
-    }
-
+    for (int i = 0; i < other.agentOffers->size(); i++)
+    {
+       agentOffers->push_back(other.agentOffers->at(i));
+    } 
 
 }
 Party::Party(Party &&other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){//move constructor - shallow copy
@@ -34,8 +34,9 @@ Party& Party::operator=(const Party &other){ // copy assignment opertor
         coalition = other.coalition;
         iterNum = other.iterNum;
         agentOffers = new vector<Agent> ();
-        for(Agent a: other.agentOffers){
-            
+        for (int i = 0; i < other.agentOffers->size(); i++)
+        {
+            agentOffers->push_back(other.agentOffers->at(i));
         }
     }
     return *this;
@@ -90,7 +91,7 @@ const string & Party::getName() const
 void Party::joinCoalition(int chosenAgentIndex, Simulation &a){
     
     Agent temp =a.getAgents().at(chosenAgentIndex);
-    int indexGenerated = a.getAgents().size();
+    int indexGenerated = a.getAgents().size(); //generate index for the new cloned agent 
 
     a.getAgents().push_back(new Agent(indexGenerated,mId,new SelectionPolicy(temp.getSelectionPolicy())));
     
