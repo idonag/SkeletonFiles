@@ -1,4 +1,6 @@
 #include "Simulation.h"
+#include <map>
+#include <iostream>
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
@@ -17,8 +19,36 @@ void Simulation::step()
 
 bool Simulation::shouldTerminate() const
 {
-    // TODO implement this method
-    return true;
+    std::map<int,int> *coalitions = new std::map<int, int>();
+    
+    
+    bool allJoined = true;
+    bool over_60 = false;
+    for(int i=0; i< mGraph.getNumVertices(); i++){
+        if(allJoined && getParty(i).getState() != State::Joined){
+            allJoined = false;
+        }
+        
+        if (coalitions->find(getParty(i).getCoalition())==coalitions->end())
+        {
+            coalitions->insert(std::pair<int,int>(getParty(i).getCoalition(),0));
+        }
+        std::map<int,int>::iterator itr;
+        itr = coalitions->find(getParty(i).getCoalition());
+        itr->second = itr->second+getParty(i).getMandates();
+    }
+    std::map<int,int>::iterator itr;
+    itr = coalitions->begin();
+    while(itr!=coalitions->end())
+    {
+        if (itr->second > 60)
+        {
+            over_60 = true;
+        }
+        itr++;
+    }
+    
+    return allJoined||over_60;
 }
 
 const Graph &Simulation::getGraph() const
