@@ -18,6 +18,6 @@ const int MandatesSelectionPolicy::select(Simulation &sim,std::vector<int> *part
 } 
 MandatesSelectionPolicy* MandatesSelectionPolicy::clone()
 {
-            return new MandatesSelectionPolicy(*this);
+    return new MandatesSelectionPolicy(*this);
 }  
  

@@ -14,9 +14,9 @@ Agent Parser::parseAgent(const json &jAgent, int agentId)
     SelectionPolicy *sp;
     string selectionPolicy = jAgent["selection_policy"];
     if (selectionPolicy == "M")
-        sp = new MandatesSelectionPolicy;
+        sp = new MandatesSelectionPolicy();
     else if (selectionPolicy == "E")
-        sp = new EdgeWeightSelectionPolicy;
+        sp = new EdgeWeightSelectionPolicy();
     else
         throw std::invalid_argument("Invalid selection policy");
 
