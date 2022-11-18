@@ -1,7 +1,17 @@
 #pragma once
+#include "Agent.h"
 
-class JoinPolicy {};
+#include <vector>
 
-class MandatesJoinPolicy : public JoinPolicy {};
+class JoinPolicy {
+    public:
+        virtual const Agent& chooseAgent(const vector<Agent>& offers)=0;
+};
 
-class LastOfferJoinPolicy : public JoinPolicy {};
+class MandatesJoinPolicy : public JoinPolicy {
+     virtual const Agent& chooseAgent(const vector<Agent>& offers);
+};
+
+class LastOfferJoinPolicy : public JoinPolicy {
+    virtual const Agent& chooseAgent(const vector<Agent> &offers);
+};
