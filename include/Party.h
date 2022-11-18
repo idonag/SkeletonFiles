@@ -34,7 +34,7 @@ public:
     const string &getName() const;
     void offer(const Agent &agent);
     int getCoalition() const;
-    void joinCoalition(const Agent & chosenAgent, const Simulation &a);
+    void joinCoalition(int chosenAgentIndex, Simulation &a);
 
 private:
     int mId;
