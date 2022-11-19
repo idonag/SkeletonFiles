@@ -92,8 +92,8 @@ void Party::joinCoalition(int chosenAgentIndex, Simulation &a){
     
     Agent temp =a.getAgents().at(chosenAgentIndex);
     int indexGenerated = a.getAgents().size(); //generate index for the new cloned agent 
-
-    a.getAgents().push_back(new Agent(indexGenerated,mId,new SelectionPolicy(temp.getSelectionPolicy())));
+    Agent* clonedAgent = new Agent(indexGenerated,mId,new SelectionPolicy(temp.getSelectionPolicy()));
+    a.getAgents().push_back(clonedAgent);
     
     coalition = a.getAgents().at(chosenAgentIndex).getCoalition();                                                                                                                                                                                                                                       
     mState=Joined;
