@@ -55,3 +55,6 @@ int Agent::getCoalition() const{
 void Agent::setCoalition(int coal){
     coalition = coal;
 }
+const SelectionPolicy& Agent::getSelectionPolicy() const{
+    return *mSelectionPolicy;
+}
