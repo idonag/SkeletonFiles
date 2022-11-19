@@ -120,4 +120,4 @@ bool Party::isOffered(int coalition)const{
 
     // TODO: implement this method
     
-}
+

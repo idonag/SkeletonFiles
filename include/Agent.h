@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include <vector>
 #include "Graph.h"
@@ -6,7 +6,6 @@
 
 class SelectionPolicy;
 class Simulation;
-
 class Agent
 {
 public:
