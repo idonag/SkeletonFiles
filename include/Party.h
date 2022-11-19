@@ -43,6 +43,6 @@ private:
     JoinPolicy *mJoinPolicy;
     State mState;
     int iterNum;
-    vector<Agent> *agentOffers; 
+    std::vector<Agent> *agentOffers; 
     int coalition;
 };
