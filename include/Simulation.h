@@ -1,12 +1,9 @@
-
+#pragma once
 
 #include <vector>
 
-#include"Graph.h"
-#include"Agent.h"
-#include"Party.h"
-
-#pragma once
+#include "Graph.h"
+#include "Agent.h"
 
 using std::string;
 using std::vector;
@@ -14,7 +11,8 @@ using std::vector;
 class Simulation
 {
 public:
-    Simulation(Graph graph, vector<Agent> agents);
+    Simulation(Graph g, vector<Agent> agents);
+
     void step();
     bool shouldTerminate() const;
 
