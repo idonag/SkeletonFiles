@@ -14,9 +14,9 @@ Agent::Agent(const Agent& other):mAgentId(other.mAgentId),mPartyId(other.mPartyI
     mSelectionPolicy = other.mSelectionPolicy->clone();
 }
 Agent::~Agent(){
-    // if(mSelectionPolicy){
-    //     delete mSelectionPolicy;
-    // }
+    if(mSelectionPolicy){
+        delete mSelectionPolicy;
+    }
 }
 Agent* Agent::operator=(const Agent& other){
     if(&other != this){
