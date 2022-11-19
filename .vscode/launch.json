@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/cRace",
-            "args": [],
+            "args": ["/home/spl211/Downloads/SkeletonFiles/tests/01.json"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

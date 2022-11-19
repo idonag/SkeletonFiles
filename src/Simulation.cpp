@@ -1,6 +1,7 @@
 #include "Simulation.h"
 #include <map>
 #include <iostream>
+#include "Party.h"
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
@@ -78,4 +79,7 @@ const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
     // TODO: you MUST implement this method for getting proper output, read the documentation above.
     return vector<vector<int>>();
+}
+vector<Agent>& Simulation::getAgents(){
+    return mAgents;
 }

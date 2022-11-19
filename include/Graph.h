@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "Party.h"
-
+//#include "Party.h"
+class Party;
 using std::vector;
 
 class Graph

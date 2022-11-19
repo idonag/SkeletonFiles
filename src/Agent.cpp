@@ -14,7 +14,9 @@ Agent::Agent(const Agent& other):mAgentId(other.mAgentId),mPartyId(other.mPartyI
     mSelectionPolicy = other.mSelectionPolicy->clone();
 }
 Agent::~Agent(){
-    delete mSelectionPolicy;
+    // if(mSelectionPolicy){
+    //     delete mSelectionPolicy;
+    // }
 }
 Agent* Agent::operator=(const Agent& other){
     if(&other != this){
@@ -40,13 +42,13 @@ void Agent::step(Simulation &sim)
     for(int i = 0; i < sim.getGraph().getNumVertices();i++){
         if(sim.getGraph().getEdgeWeight(this->getPartyId(),i)>0){
             if (sim.getGraph().getParty(i).getState() != State::Joined){
-                //if(sim.getGraph().getParty(i) ) check if a agent from my coalitoin already offerd
-                vec_to_return->push_back(i);
+                if(!sim.getGraph().getParty(i).isOffered(coalition)) //check if an agent from my coalitoin already offerd
+                    vec_to_return->push_back(i);
             }
         }
     }
     int partySelected =mSelectionPolicy->select(sim,vec_to_return,mPartyId);
-    //sim.getGraph().getParty(partySelected) //activate get offer function im party class
+    sim.getGraph().getParty(partySelected).offer(*this); //activate get offer function im party class
     delete vec_to_return;
 }
 int Agent::getCoalition() const{
@@ -54,4 +56,7 @@ int Agent::getCoalition() const{
 }
 void Agent::setCoalition(int coal){
     coalition = coal;
+}
+SelectionPolicy* Agent::getSelectionPolicy() const{
+    return mSelectionPolicy;
 }

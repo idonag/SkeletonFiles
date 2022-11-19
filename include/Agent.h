@@ -3,8 +3,9 @@
 #include <vector>
 #include "Graph.h"
 
-class SelectionPolicy;
 
+class SelectionPolicy;
+class Simulation;
 class Agent
 {
 public:
@@ -12,12 +13,12 @@ public:
     Agent(const Agent &other);
     int getPartyId() const;
     int getId() const;
-    void step(Simulation &);
+    void step(Simulation &sim);
     ~Agent();
     Agent* operator= (const Agent& other);
     int getCoalition() const;
     void setCoalition(int coal);
-
+    SelectionPolicy* getSelectionPolicy() const;
 private:
     int mAgentId;
     int mPartyId;
