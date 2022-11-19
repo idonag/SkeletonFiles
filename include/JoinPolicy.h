@@ -13,5 +13,5 @@ class MandatesJoinPolicy : public JoinPolicy {
 };
 
 class LastOfferJoinPolicy : public JoinPolicy {
-    virtual int chooseAgent(Simulation &sim,const vector<Agent> &offers);
+    virtual int chooseAgent(Simulation &sim,const vector<Agent>& offers);
 };
