@@ -1,14 +1,13 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Agent.h"
-#include "JoinPolicy.h"
-#include "Simulation.h"
+
 
 using std::string;
-
-
-
+class Agent;
+class JoinPolicy;
+class Simulation;
+class SelectionPolicy;
 
 enum State
 {
@@ -21,8 +20,8 @@ class Party
 {
 public:
     Party(int id, string name, int mandates, JoinPolicy *); 
-    Party(Party &other);
-    Party(Party &&other);
+    Party(const Party &other);
+    Party(const Party &&other);
     ~Party();
     Party& operator=(const Party &other);
     Party& operator=(const Party &&other);
@@ -35,6 +34,7 @@ public:
     void offer(const Agent &agent);
     int getCoalition() const;
     void joinCoalition(int chosenAgentIndex, Simulation &a);
+    bool isOffered(int coalition) const;
 
 private:
     int mId;

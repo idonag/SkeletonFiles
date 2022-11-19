@@ -1,8 +1,8 @@
-#include "../include/JoinPolicy.h"
-
-
-int MandatesJoinPolicy::chooseAgent(Simulation &sim,const vector<Agent>& offers){
-        int maxMandates=0;
+#include "JoinPolicy.h"
+#include "Agent.h"
+#include "Simulation.h"
+#include "Party.h"
+int MandatesJoinPolicy::chooseAgent(Simulation &sim,const vector<Agent>& offers){        int maxMandates=0;
         int chosenIndex=0;
         for(int i=0; i<offers.size();i++){
             Agent a = offers.at(i);
@@ -13,4 +13,7 @@ int MandatesJoinPolicy::chooseAgent(Simulation &sim,const vector<Agent>& offers)
         }
         return offers.at(chosenIndex).getId();
         
+}
+MandatesJoinPolicy* MandatesJoinPolicy::clone() const{
+        return new MandatesJoinPolicy(*this);
 }

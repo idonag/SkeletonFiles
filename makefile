@@ -27,9 +27,8 @@ bin/MandatesSelectionPolicy.o: src/MandatesSelectionPolicy.cpp
 bin/EdgeWeightSelectionPolicy.o: src/EdgeWeightSelectionPolicy.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/EdgeWeightSelectionPolicy.o src/EdgeWeightSelectionPolicy.cpp
 
-bin/LastOfferJoinPolicy.o: src/LastOfferJoinPolicy.cpp
+bin/LastOfferJoinPolicy.o .o: src/LastOfferJoinPolicy.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/LastOfferJoinPolicy.o src/LastOfferJoinPolicy.cpp
-
 
 bin/MandatesJoinPolicy.o: src/MandatesJoinPolicy.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/MandatesJoinPolicy.o src/MandatesJoinPolicy.cpp

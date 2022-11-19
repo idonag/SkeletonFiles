@@ -18,7 +18,7 @@ public:
     Agent* operator= (const Agent& other);
     int getCoalition() const;
     void setCoalition(int coal);
-    const SelectionPolicy& getSelectionPolicy() const;
+    SelectionPolicy* getSelectionPolicy() const;
 private:
     int mAgentId;
     int mPartyId;

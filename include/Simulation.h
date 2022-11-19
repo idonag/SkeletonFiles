@@ -1,12 +1,13 @@
 #pragma once
-
 #include <vector>
-
+#include <string>
 #include "Graph.h"
 #include "Agent.h"
-
+// #ifndef Graph
+// #define Graph
 using std::string;
 using std::vector;
+class party;
 
 class Simulation
 {
@@ -29,3 +30,5 @@ private:
     vector<Agent> mAgents;
     Party &getParty(int partyId);
 };
+
+// #endif

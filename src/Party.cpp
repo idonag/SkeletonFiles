@@ -1,5 +1,8 @@
 #include "Party.h"
-#include <vector>
+#include "Agent.h"
+#include "JoinPolicy.h"
+#include "Simulation.h"
+#include "SelectionPolicy.h"
 
 Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting),iterNum(0),coalition(-1) 
 {
@@ -7,21 +10,24 @@ Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName
     agentOffers = new vector<Agent>();
 
 }
-Party::Party(Party &other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){ // copy constructor
+Party::Party(const Party &other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){ // copy constructor
+    mJoinPolicy = other.mJoinPolicy->clone();
     agentOffers = new vector<Agent>();
     for (int i = 0; i < other.agentOffers->size(); i++)
     {
-       agentOffers->push_back(other.agentOffers->at(i));
+        agentOffers->push_back(other.agentOffers->at(i));
     } 
 
 }
-Party::Party(Party &&other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){//move constructor - shallow copy
+Party::Party(const Party &&other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){//move constructor - shallow copy
    agentOffers = other.agentOffers;
+   mJoinPolicy = other.mJoinPolicy;
 }
 
 Party::~Party(){//destructor
     if(agentOffers)
          delete agentOffers;
+    delete mJoinPolicy;
 }
 Party& Party::operator=(const Party &other){ // copy assignment opertor
     if(this != &other){
@@ -38,6 +44,7 @@ Party& Party::operator=(const Party &other){ // copy assignment opertor
         {
             agentOffers->push_back(other.agentOffers->at(i));
         }
+        mJoinPolicy = other.mJoinPolicy->clone();
     }
     return *this;
 }
@@ -52,6 +59,7 @@ if(this!=&other){
     mState = other.mState;
     coalition = other.coalition;
     iterNum = other.iterNum;
+    mJoinPolicy = other.mJoinPolicy;
 
 }
 
@@ -88,18 +96,7 @@ const string & Party::getName() const
     return mName;
 }
 
-void Party::joinCoalition(int chosenAgentIndex, Simulation &a){
-    
-    Agent temp =a.getAgents().at(chosenAgentIndex);
-    int indexGenerated = a.getAgents().size(); //generate index for the new cloned agent 
-    Agent* clonedAgent = new Agent(indexGenerated,mId,new SelectionPolicy(temp.getSelectionPolicy()));
-    a.getAgents().push_back(clonedAgent);
-    
-    coalition = a.getAgents().at(chosenAgentIndex).getCoalition();                                                                                                                                                                                                                                       
-    mState=Joined;
-}
-
-void Party::step(Simulation &s) //when joining coalition, clone the offering agent to the vector of agents in th simulation
+void Party::step(Simulation &s) 
 {
     if(mState==CollectingOffers){
         if(iterNum==3){
@@ -111,7 +108,16 @@ void Party::step(Simulation &s) //when joining coalition, clone the offering age
     }
 
 }
+bool Party::isOffered(int coalition)const{
+    for (int i = 0; i < agentOffers->size(); i++){
+        if (agentOffers->at(i).getCoalition()==coalition)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
     // TODO: implement this method
     
-
+}

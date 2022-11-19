@@ -1,6 +1,7 @@
 #include "Simulation.h"
 #include <map>
 #include <iostream>
+#include "Party.h"
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
