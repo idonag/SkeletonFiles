@@ -26,8 +26,9 @@ Party::Party(const Party &&other): mId(other.mId),mName(other.mName),mMandates(o
 
 Party::~Party(){//destructor
     if(agentOffers)
-         delete agentOffers;
-    delete mJoinPolicy;
+        delete agentOffers;
+    if(mJoinPolicy)
+        delete mJoinPolicy;
 }
 Party& Party::operator=(const Party &other){ // copy assignment opertor
     if(this != &other){
@@ -96,7 +97,21 @@ const string & Party::getName() const
     return mName;
 }
 
-void Party::step(Simulation &s) 
+void Party::joinCoalition(int chosenAgentIndex, Simulation &a){
+    
+    Agent temp =a.getAgents().at(chosenAgentIndex);
+    int indexGenerated = a.getAgents().size(); //generate index for the new cloned agent 
+    SelectionPolicy *otherSel = temp.getSelectionPolicy();
+    
+
+    Agent* clonedAgent = new Agent(indexGenerated,mId,otherSel);
+    a.getAgents().push_back(*clonedAgent);
+    
+    coalition = a.getAgents().at(chosenAgentIndex).getCoalition();                                                                                                                                                                                                                                       
+    mState=Joined;
+}
+
+void Party::step(Simulation &s) //when joining coalition, clone the offering agent to the vector of agents in th simulation
 {
     if(mState==CollectingOffers){
         if(iterNum==3){
@@ -119,5 +134,3 @@ bool Party::isOffered(int coalition)const{
 }
 
     // TODO: implement this method
-    
-

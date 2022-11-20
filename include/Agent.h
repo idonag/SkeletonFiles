@@ -14,7 +14,7 @@ public:
     int getPartyId() const;
     int getId() const;
     void step(Simulation &sim);
-    ~Agent();
+    virtual ~Agent();
     Agent* operator= (const Agent& other);
     int getCoalition() const;
     void setCoalition(int coal);

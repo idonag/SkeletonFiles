@@ -22,7 +22,7 @@ public:
     Party(int id, string name, int mandates, JoinPolicy *); 
     Party(const Party &other);
     Party(const Party &&other);
-    ~Party();
+    virtual ~Party();
     Party& operator=(const Party &other);
     Party& operator=(const Party &&other);
 
