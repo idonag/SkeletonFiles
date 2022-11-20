@@ -2,13 +2,13 @@
 #pragma once
 const int EdgeWeightSelectionPolicy:: select(Simulation &sim,vector<int> *parties,int myId) const{
     int selectedPartyId(-1);
-    for (int partyId :*parties){
+    for (int i=0;i<sim.getGraph().getNumVertices();i++){
         if (selectedPartyId == -1)
         {
-            selectedPartyId = partyId;
+            selectedPartyId = i;
         }
-        else if(sim.getGraph().getEdgeWeight(partyId,myId)> sim.getGraph().getEdgeWeight(selectedPartyId,myId)){
-            selectedPartyId = partyId;
+        else if(sim.getGraph().getEdgeWeight(i,myId)> sim.getGraph().getEdgeWeight(selectedPartyId,myId)){
+            selectedPartyId = i;
         }
     }
     return selectedPartyId;

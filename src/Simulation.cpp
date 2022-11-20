@@ -5,16 +5,25 @@
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
+
     // You can change the implementation of the constructor, but not the signature!
+    for(int i = 0 ; i < agents.size(); i++){
+        mAgents.at(i).setCoalition(i);
+        mGraph.getParty(mAgents.at(i).getPartyId()).setCoalition(i);
+    }
 }
 
 void Simulation::step()
 {
+
+
+
     for(int i=0; i< mGraph.getNumVertices(); i++){
         getParty(i).step(*this);
     }
-    for (Agent agent : mAgents){
-        agent.step(*this);
+    for (int i=0; i<mAgents.size();i++){
+
+        mAgents.at(i).step(*this);
     }
 }
 
@@ -29,14 +38,17 @@ bool Simulation::shouldTerminate() const
         if(allJoined && getParty(i).getState() != State::Joined){
             allJoined = false;
         }
-        
-        if (coalitions->find(getParty(i).getCoalition())==coalitions->end())
+        if (getParty(i).getCoalition()!=-1)
         {
-            coalitions->insert(std::pair<int,int>(getParty(i).getCoalition(),0));
+            /* code */
+            if (coalitions->find(getParty(i).getCoalition()) == coalitions->end())
+            {
+                coalitions->insert(std::pair<int,int>(getParty(i).getCoalition(),0));
+            }
+            std::map<int,int>::iterator itr;
+            itr = coalitions->find(getParty(i).getCoalition());
+            itr->second = itr->second+getParty(i).getMandates();
         }
-        std::map<int,int>::iterator itr;
-        itr = coalitions->find(getParty(i).getCoalition());
-        itr->second = itr->second+getParty(i).getMandates();
     }
     std::map<int,int>::iterator itr;
     itr = coalitions->begin();
@@ -78,7 +90,27 @@ Party &Simulation::getParty(int partyId)
 const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
     // TODO: you MUST implement this method for getting proper output, read the documentation above.
-    return vector<vector<int>>();
+    vector<vector<int>> *coalitions = new vector<vector<int>>();
+    int maxCoalId = -1;
+    for(int i = 0; i < mGraph.getNumVertices();i++){
+        if(getParty(i).getCoalition() > maxCoalId){
+            maxCoalId = getParty(i).getCoalition();
+        }
+    }
+    for (int i = 0; i <= maxCoalId; i++)
+    {
+        vector<int> *coalition = new vector<int>();
+        coalitions->push_back(*coalition);
+
+    }
+    
+    for (int i = 0; i < mGraph.getNumVertices(); i++)
+    {
+        if(getParty(i).getCoalition()!=-1)
+            coalitions->at(getParty(i).getCoalition()).push_back(i);
+    }
+    
+    return *coalitions;
 }
 vector<Agent>& Simulation::getAgents(){
     return mAgents;

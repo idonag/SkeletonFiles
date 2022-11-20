@@ -14,9 +14,9 @@ Agent::Agent(const Agent& other):mAgentId(other.mAgentId),mPartyId(other.mPartyI
     mSelectionPolicy = other.mSelectionPolicy->clone();
 }
 Agent::~Agent(){
-    if(mSelectionPolicy){
-        delete mSelectionPolicy;
-    }
+    // if(mSelectionPolicy){
+    //     delete mSelectionPolicy;
+    // }
 }
 Agent* Agent::operator=(const Agent& other){
     if(&other != this){
@@ -48,7 +48,8 @@ void Agent::step(Simulation &sim)
         }
     }
     int partySelected =mSelectionPolicy->select(sim,vec_to_return,mPartyId);
-    sim.getGraph().getParty(partySelected).offer(*this); //activate get offer function im party class
+    if(partySelected != -1)
+        sim.getGraph().getParty(partySelected).offer(*this); //activate get offer function im party class
     delete vec_to_return;
 }
 int Agent::getCoalition() const{

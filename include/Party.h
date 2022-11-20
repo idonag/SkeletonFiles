@@ -35,6 +35,7 @@ public:
     int getCoalition() const;
     void joinCoalition(int chosenAgentIndex, Simulation &a);
     bool isOffered(int coalition) const;
+    void setCoalition(int coal);
 
 private:
     int mId;

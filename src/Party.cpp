@@ -25,10 +25,10 @@ Party::Party(const Party &&other): mId(other.mId),mName(other.mName),mMandates(o
 }
 
 Party::~Party(){//destructor
-    if(agentOffers)
-        delete agentOffers;
-    if(mJoinPolicy)
-        delete mJoinPolicy;
+    // if(agentOffers)
+    //     delete agentOffers;
+    // if(mJoinPolicy)
+    //     delete mJoinPolicy;
 }
 Party& Party::operator=(const Party &other){ // copy assignment opertor
     if(this != &other){
@@ -83,8 +83,10 @@ void Party::setState(State state)
 
 void Party::offer(const Agent &offer){
     agentOffers->push_back(offer);
-    if(mState!=CollectingOffers)
+    if(mState==Waiting){
         mState=CollectingOffers;
+        iterNum++;
+    }
 }
 
 int Party::getMandates() const
@@ -131,6 +133,9 @@ bool Party::isOffered(int coalition)const{
         }
     }
     return false;
+}
+void Party::setCoalition(int coal){
+    coalition = coal;
 }
 
     // TODO: implement this method
