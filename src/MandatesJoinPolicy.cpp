@@ -5,7 +5,7 @@
 int MandatesJoinPolicy::chooseAgent(Simulation &sim,const vector<int>& offers){   
         int maxMandates=sim.getGraph().getParty(offers.at(0)).getMandates();
         int chosenIndex=0;
-        for(int i=1; i<offers.size();i++){
+        for(unsigned int i=1; i< (unsigned) offers.size();i++){
             Agent a = sim.getAgents().at(i);
             if(sim.getGraph().getParty(a.getPartyId()).getMandates()>maxMandates){
                 maxMandates=sim.getGraph().getParty(a.getPartyId()).getMandates();
@@ -13,8 +13,7 @@ int MandatesJoinPolicy::chooseAgent(Simulation &sim,const vector<int>& offers){
             }
         }
         return offers.at(chosenIndex);
-        
 }
 MandatesJoinPolicy* MandatesJoinPolicy::clone() const{
-        return new MandatesJoinPolicy(*this);
+        return new MandatesJoinPolicy();
 }

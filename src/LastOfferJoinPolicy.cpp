@@ -1,4 +1,4 @@
-#pragma once
+
 #include "JoinPolicy.h"
 #include "Agent.h"
 #include "Simulation.h"
@@ -7,6 +7,7 @@ int LastOfferJoinPolicy::chooseAgent(Simulation &sim,const vector<int>& offers){
 
 }
 LastOfferJoinPolicy* LastOfferJoinPolicy::clone() const{
-        return new LastOfferJoinPolicy(*this);
+        return new LastOfferJoinPolicy();
 }
+JoinPolicy::~JoinPolicy(){}
 

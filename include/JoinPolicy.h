@@ -8,6 +8,7 @@ class JoinPolicy {
     public:
         virtual int chooseAgent(Simulation &sim,const std::vector<int>& offers)=0;
         virtual JoinPolicy* clone() const = 0;
+        virtual ~JoinPolicy();
 };
 
 class MandatesJoinPolicy : public JoinPolicy {
