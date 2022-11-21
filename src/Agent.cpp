@@ -42,22 +42,24 @@ void Agent::step(Simulation &sim)
     for(int i = 0; i < sim.getGraph().getNumVertices();i++){
         if(sim.getGraph().getEdgeWeight(this->getPartyId(),i)>0){
             if (sim.getGraph().getParty(i).getState() != State::Joined){
-                if(!sim.getGraph().getParty(i).isOffered(coalition)) //check if an agent from my coalitoin already offerd
+                if(!sim.getGraph().getParty(i).isOffered(coalition,sim)){ //check if an agent from my coalitoin already offerd
                     vec_to_return->push_back(i);
+                }
             }
         }
     }
-    int partySelected =mSelectionPolicy->select(sim,vec_to_return,mPartyId);
-    if(partySelected != -1)
-        sim.getGraph().getParty(partySelected).offer(*this); //activate get offer function im party class
+    if(vec_to_return->size()>0){
+        int partySelectedId =mSelectionPolicy->select(sim,*vec_to_return,mPartyId);
+        sim.getGraph().getParty(partySelectedId).offer(mAgentId); //activate get offer function im party class
+    }
     delete vec_to_return;
 }
-int Agent::getCoalition() const{
+const int Agent::getCoalition() const{
     return coalition;
 }
 void Agent::setCoalition(int coal){
     coalition = coal;
 }
-SelectionPolicy* Agent::getSelectionPolicy() const{
-    return mSelectionPolicy;
+const SelectionPolicy& Agent::getSelectionPolicy() const{
+    return *mSelectionPolicy;
 }

@@ -31,10 +31,10 @@ public:
     int getMandates() const;
     void step(Simulation &s) ;
     const string &getName() const;
-    void offer(const Agent &agent);
+    void offer(int agentInd);
     int getCoalition() const;
     void joinCoalition(int chosenAgentIndex, Simulation &a);
-    bool isOffered(int coalition) const;
+    bool isOffered(int coalition,Simulation &s) ;
     void setCoalition(int coal);
 
 private:
@@ -44,6 +44,6 @@ private:
     JoinPolicy *mJoinPolicy;
     State mState;
     int iterNum;
-    std::vector<Agent> *agentOffers; 
+    std::vector<int> *agentOffers; 
     int coalition;
 };

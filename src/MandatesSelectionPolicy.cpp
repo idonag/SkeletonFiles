@@ -2,19 +2,15 @@
 #include "../include/Simulation.h"
 #include "../include/Party.h"
 #pragma once
-const int MandatesSelectionPolicy::select(Simulation &sim,std::vector<int> *parties,int myId) const
+const int MandatesSelectionPolicy::select(Simulation &sim,std::vector<int> &parties,int myId) const
 {
-    int selectedPartyId(-1);
-    for (int i=0;i<sim.getGraph().getNumVertices();i++){
-        if (selectedPartyId == -1)
-        {
-            selectedPartyId = i;
-        }
-        else if(sim.getGraph().getMandates(i)> sim.getGraph().getMandates(selectedPartyId)){
-            selectedPartyId = i;
+    int selectedParty=0;
+    for (int i=1;i<parties.size();i++){
+        if(sim.getGraph().getMandates(parties.at(selectedParty))> sim.getGraph().getMandates(parties.at(selectedParty))){
+            selectedParty = i;
         }
     }
-    return selectedPartyId;
+    return parties.at(selectedParty);
 } 
  MandatesSelectionPolicy* MandatesSelectionPolicy::clone() const
 {

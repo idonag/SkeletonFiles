@@ -7,12 +7,12 @@
 Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting),iterNum(0),coalition(-1) 
 {
     
-    agentOffers = new vector<Agent>();
+    agentOffers = new vector<int>();
 
 }
 Party::Party(const Party &other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mState(other.mState),coalition(other.coalition),iterNum(other.iterNum){ // copy constructor
     mJoinPolicy = other.mJoinPolicy->clone();
-    agentOffers = new vector<Agent>();
+    agentOffers = new vector<int>();
     for (int i = 0; i < other.agentOffers->size(); i++)
     {
         agentOffers->push_back(other.agentOffers->at(i));
@@ -40,7 +40,7 @@ Party& Party::operator=(const Party &other){ // copy assignment opertor
         mState = other.mState;
         coalition = other.coalition;
         iterNum = other.iterNum;
-        agentOffers = new vector<Agent> ();
+        agentOffers = new vector<int> ();
         for (int i = 0; i < other.agentOffers->size(); i++)
         {
             agentOffers->push_back(other.agentOffers->at(i));
@@ -81,8 +81,8 @@ void Party::setState(State state)
     mState = state;
 }
 
-void Party::offer(const Agent &offer){
-    agentOffers->push_back(offer);
+void Party::offer(int agentIndex){
+    agentOffers->push_back(agentIndex);
     if(mState==Waiting){
         mState=CollectingOffers;
         iterNum++;
@@ -99,17 +99,16 @@ const string & Party::getName() const
     return mName;
 }
 
-void Party::joinCoalition(int chosenAgentIndex, Simulation &a){
+void Party::joinCoalition(int chosenAgentIndex, Simulation &sim){
     
-    Agent temp =a.getAgents().at(chosenAgentIndex);
-    int indexGenerated = a.getAgents().size(); //generate index for the new cloned agent 
-    SelectionPolicy *otherSel = temp.getSelectionPolicy();
-    
+    int indexGenerated = sim.getAgents().size(); //generate index for the new cloned agent 
+    SelectionPolicy *otherSel = sim.getAgents().at(chosenAgentIndex).getSelectionPolicy().clone();
 
     Agent* clonedAgent = new Agent(indexGenerated,mId,otherSel);
-    a.getAgents().push_back(*clonedAgent);
-    
-    coalition = a.getAgents().at(chosenAgentIndex).getCoalition();                                                                                                                                                                                                                                       
+    clonedAgent->setCoalition(sim.getAgents().at(chosenAgentIndex).getCoalition());
+    coalition = clonedAgent->getCoalition();
+    sim.getAgents().push_back(*clonedAgent);
+                                                                                                                                                                                                                                 
     mState=Joined;
 }
 
@@ -125,9 +124,9 @@ void Party::step(Simulation &s) //when joining coalition, clone the offering age
     }
 
 }
-bool Party::isOffered(int coalition)const{
+bool Party::isOffered(int coalition, Simulation &s){
     for (int i = 0; i < agentOffers->size(); i++){
-        if (agentOffers->at(i).getCoalition()==coalition)
+        if ( s.getAgents().at(agentOffers->at(i)).getCoalition()==coalition)
         {
             return true;
         }

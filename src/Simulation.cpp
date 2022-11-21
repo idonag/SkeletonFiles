@@ -15,9 +15,6 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgen
 
 void Simulation::step()
 {
-
-
-
     for(int i=0; i< mGraph.getNumVertices(); i++){
         getParty(i).step(*this);
     }
