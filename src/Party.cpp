@@ -15,13 +15,14 @@ Party::Party(const Party &other): mId(other.mId),mName(other.mName),mMandates(ot
     } 
 
 }
-Party::Party(Party &&other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mJoinPolicy(other.mJoinPolicy->clone()),mState(other.mState),iterNum(other.iterNum),agentOffers(other.agentOffers),coalition(other.coalition){//move constructor - shallow copy
+Party::Party(Party &&other): mId(other.mId),mName(other.mName),mMandates(other.mMandates),mJoinPolicy(other.mJoinPolicy),mState(other.mState),iterNum(other.iterNum),agentOffers(other.agentOffers),coalition(other.coalition){//move constructor - shallow copy
     other.mJoinPolicy = nullptr;
 }
 
 Party::~Party(){//destructor    
     if(mJoinPolicy)
         delete mJoinPolicy;
+    mJoinPolicy = nullptr;
 }
 Party& Party::operator=(const Party &other){ // copy assignment opertor
     if(this != &other){
@@ -40,7 +41,7 @@ Party& Party::operator=(const Party &other){ // copy assignment opertor
     }
     return *this;
 }
-Party& Party::operator=(const Party &&other){ // move assignment opertor
+Party& Party::operator=(Party &&other){ // move assignment opertor
 if(this!=&other){
     mId = other.mId;
     mName=other.mName;
@@ -50,6 +51,7 @@ if(this!=&other){
     iterNum = other.iterNum;
     coalition = other.coalition;
     agentOffers=other.agentOffers;
+    other.mJoinPolicy = nullptr;
 
 }
 

@@ -24,7 +24,7 @@ public:
     Party( Party &&other);
     virtual ~Party();
     Party& operator=(const Party &other);
-    Party& operator=(const Party &&other);
+    Party& operator=( Party &&other);
 
     State getState() const;
     void setState(State state);
